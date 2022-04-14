@@ -13,24 +13,44 @@ const { NotImplementedError } = require('../extensions/index.js');
  * queue.dequeue(); // returns the top element from queue and deletes it, returns 1
  * queue.getUnderlyingList() // returns { value: 3, next: null }
  */
+
 class Queue {
+  constructor() {
+    this.arr = [];
+    this.obj = {};
+  }
+  getUnderlyingList() { // возвращает базовый связанный список { value: 3, next: null }
+    this.arr.reverse();
+    this.arr.forEach((item, idx) => {
 
-  getUnderlyingList() {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+      if (!idx) {
+        this.obj.next = {
+          value: item,
+          next: null
+        }
+      } else {
+        this.obj.next = {
+          value: item,
+          next: this.obj.next
+        };
+      }
+    });
+    return this.obj.next;
   }
 
-  enqueue(/* value */) {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+  enqueue(item) { // добавить элемент в конец массива (очереди)
+    this.arr.push(item);
   }
 
-  dequeue() {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+  dequeue() { // убрать элемент с начала массива (очереди) и возвратить его
+    return this.arr.shift();
   }
 }
 
 module.exports = {
   Queue
 };
+
+// npm run test ./test/queue.test.js
+
+// node src/stack.js
